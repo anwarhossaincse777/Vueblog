@@ -9,16 +9,17 @@ const props = defineProps({
   }
 });
 
-const SinglePost=ref([])
+const SinglePost = ref([])
 
-  list();
-  async function list(){
+list();
 
-    let url=`https://basic-blog.teamrabbil.com/api/post-details/${parseInt(props.id)}`
-    let res= await axios.get(url);
-    SinglePost.value=res.data;
+async function list() {
 
-  }
+  let url = `https://basic-blog.teamrabbil.com/api/post-details/${parseInt(props.id)}`
+  let res = await axios.get(url);
+  SinglePost.value = res.data;
+
+}
 
 </script>
 
@@ -30,12 +31,12 @@ const SinglePost=ref([])
     <article class="flex flex-col shadow my-4">
       <!-- Article Image -->
       <a href="#" class="hover:opacity-75">
-        <img :src="SinglePost.postDetails.img" >
+        <img :src="SinglePost.postDetails.img">
       </a>
       <div class="bg-white flex flex-col justify-start p-6">
-        <a href="#" class="text-blue-700 text-sm font-bold uppercase pb-4">{{SinglePost.postDetails.title}}</a>
+        <a href="#" class="text-blue-700 text-sm font-bold uppercase pb-4">{{ SinglePost.postDetails.title }}</a>
 
-        <p class="pb-3">{{SinglePost.postDetails.content}}</p>
+        <p class="pb-3">{{ SinglePost.postDetails.content }}</p>
 
       </div>
     </article>

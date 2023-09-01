@@ -1,15 +1,17 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import axios from "axios";
+import {RouterLink} from 'vue-router'
 
-const categories=ref([])
+const categories = ref([])
 
 list();
-async function list(){
 
-  let url="https://basic-blog.teamrabbil.com/api/post-categories"
-  let res= await axios.get(url);
-  categories.value=res.data;
+async function list() {
+
+  let url = "https://basic-blog.teamrabbil.com/api/post-categories"
+  let res = await axios.get(url);
+  categories.value = res.data;
 
 }
 </script>
@@ -21,7 +23,9 @@ async function list(){
 
       <nav>
         <ul class="flex items-center justify-between font-bold text-sm text-white uppercase no-underline">
-          <li><RouterLink class="hover:text-gray-200 hover:underline px-4" :to="{name:'home'}">Sports Blog</RouterLink></li>
+          <li>
+            <RouterLink class="hover:text-gray-200 hover:underline px-4" :to="{name:'home'}">Sports Blog</RouterLink>
+          </li>
 
         </ul>
       </nav>
@@ -32,10 +36,10 @@ async function list(){
             <li>
               <RouterLink class="hover:text-gray-200 hover:underline px-6" :to="{name:'home'}">Home</RouterLink>
             </li>
-           <span v-for="category in categories" :key="category.id">
-           <RouterLink class="hover:text-gray-200 hover:underline px-4"   :to="{name:'PostsPage',params:{id:category.id}}" >{{category.name}}</RouterLink>
+            <span v-for="category in categories" :key="category.id">
+           <RouterLink class="hover:text-gray-200 hover:underline px-4"
+                       :to="{name:'CategoryBlogPage',params:{ id:category.id,category_name:category.name }}">{{ category.name }}</RouterLink>
            </span>
-
 
 
           </ul>

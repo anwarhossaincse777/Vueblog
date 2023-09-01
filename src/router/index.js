@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import BlogPage from "@/views/pages/BlogPage.vue";
-import SingleBlogPage from "@/views/pages/SingleBlogPage.vue";
+import CategoryBlogPage from "@/views/pages/CategoryBlogPage.vue";
+import SinglePostPage from "@/views/pages/SinglePostPage.vue";
 import PostsPage from "@/views/pages/PostsPage.vue";
+import SingleCategoryBLog from "@/views/pages/SingleCategoryBLog.vue";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
     {
       path: '/',
@@ -13,24 +14,15 @@ const router = createRouter({
       component: HomeView
     },
 
-
-    // {
-    //   path: '/posts',
-    //   name: 'posts',
-    //   component: Posts,
-    // },
-
-
-
     {
-      path: '/category/:id',
-      name: 'blogPage',
-      component: BlogPage,
+      path: '/:category_name/:id',
+      name: 'CategoryBlogPage',
+      component: CategoryBlogPage,
       props:true,
     },
 
     {
-      path: '/category/:id',
+      path: '/posts/:id',
       name: 'PostsPage',
       component: PostsPage,
       props:true,
@@ -38,8 +30,15 @@ const router = createRouter({
 
     {
       path: '/post/:id',
-      name: 'SingleBlogPage',
-      component: SingleBlogPage,
+      name: 'SinglePostPage',
+      component:SinglePostPage ,
+      props:true,
+    },
+
+    {
+      path: '/category/post/:id',
+      name: 'SingleCategoryBLog',
+      component:SingleCategoryBLog ,
       props:true,
     },
   ]

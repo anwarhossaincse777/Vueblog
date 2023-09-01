@@ -1,32 +1,47 @@
 <script setup>
 import SideBarComponent from "@/components/SideBarComponent.vue";
+import router from "@/router";
+import {RouterLink} from 'vue-router'
 
-// const props = defineProps({
-//   id: {
-//     type: String,
-//     required: true
-//   }
-// });
+const props = defineProps({
+  id: {
+    type: String,
+    required: true
+  }
+});
 
 
 import axios from "axios";
-import {ref} from "vue";
+import {computed, ref} from "vue";
+import {list} from "postcss";
 
 const postList = ref([])
 
 
-list();
 
-async function list() {
+const getData=computed(
+    async function list() {
 
-  let url = "https://basic-blog.teamrabbil.com/api/post-newest"
-  let res = await axios.get(url);
-  postList.value = res.data;
-}
+      let url = `https://basic-blog.teamrabbil.com/api/post-list/${parseInt(props.id)}`
+      let res = await axios.get(url);
+      if (res.status === 200) {
+        postList.value = res.data;
+      } else {
+        alert('No Data Found');
+      }
+
+      return postList;
+    }
+
+)
+
+
 
 </script>
 
 <template>
+<input type="hidden" v-model="getData" />
+
   <div class="container mx-auto flex flex-wrap py-6">
 
     <!-- Posts Section -->
@@ -38,15 +53,14 @@ async function list() {
           <img :src="post.img">
         </a>
         <div class="bg-white flex flex-col justify-start p-6">
-          <RouterLink :to="{name:'SinglePostPage',params:{id:post.id}}"
+          <RouterLink :to="{name:'SingleCategoryBLog',params:{id:post.category_id}}"
                       class="text-blue-700 text-sm font-bold uppercase pb-4">{{ post.title }}
           </RouterLink>
-          <RouterLink :to="{name:'SinglePostPage',params:{id:post.id}}"
+          <RouterLink :to="{name:'SingleCategoryBLog',params:{id:post.category_id}}"
                       class="text-3xl font-bold hover:text-gray-700 pb-4">{{ post.short }}
           </RouterLink>
         </div>
       </article>
-
 
     </section>
     <SideBarComponent/>
